@@ -15,8 +15,8 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView{
-            
-            
+
+
             List(networkManager.posts){ (post) in
                 
                 NavigationLink(destination: DetailView(url: post.url)) {
