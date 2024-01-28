@@ -7,78 +7,73 @@
 
 import SwiftUI
 
-
-
 struct ContentView: View {
-    
     @ObservedObject var networkManager = NetworkManager()
     
     var body: some View {
-        NavigationView{
-
-
-            
-            
-            List(networkManager.posts){ (post) in
+        NavigationView {
+            List(networkManager.posts) { post in
                 
-                NavigationLink(destination: DetailView(url: post.url)) {
-                    
-                    HStack{
-                        VStack{
+                NavigationLink(destination: DetailView(url: post.url, title: post.title)) {
+                    HStack {
+                        VStack {
                             Text("\(post.points)")
+                                .fontWeight(.bold)
                                 .foregroundColor(.green)
                             
                             Text("Upvotes")
+                                .font(.footnote)
                                 .font(.system(size: 10))
-                                .foregroundColor(.indigo)
-                            
+                                .foregroundColor(.primary)
                         }
                         
-                        VStack(alignment: .leading){
+                        VStack(alignment: .leading) {
                             Text(post.title)
+                                .font(.headline)
                                 .padding(1)
                             
-                            
-                            HStack{
-                                Text("by \(post.author)")
-                                    .font(.system(size: 10))
-                                    .foregroundColor(.teal)
-                                    .frame(width: 90, alignment: .leading)
+                            HStack {
+                                HStack{
+                                    Text("by")
+                                        .font(.system(size: 10))
+                                        .foregroundColor(.secondary)
+                                        
+                                    Text("_\(post.author)_")
+                                        .font(.system(size: 10))
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.secondary)
+                                        .frame(width: 90, alignment: .leading)
+                                        .offset(x:-5)
                                     
-                                
-                                
-                                
-                                HStack(alignment: .center){
-                                    Image(systemName: "clock")
+                                }
+                                HStack {
+                                    Image(systemName: "clock.fill")
                                         .foregroundColor(.orange)
+                                        .imageScale(.small)
                                     
-                                    
-                                    
+                                    Spacer(minLength: 2)
                                     
                                     Text("\(post.date_time)")
+                                        .foregroundStyle(.secondary)
                                         .font(.system(size: 10))
+                                        
                                 }
                                 
                                 
                             }
                         }
-                        
-
                     }
                     
                 }
                 
                 
-               
             }
             
             
-            
             .navigationBarTitle("Hacker News ")
-        }.onAppear{
+        }.onAppear {
             networkManager.fetchData()
         }
-        
     }
 }
 
@@ -87,12 +82,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-
-
-
-
-//let posts = [
-//    Post(id: "11", title: "Hello World"),
-//    Post(id: "11", title: "Bye, World"),
-//    Post(id: "13", title: "Hi, World")
-//]
